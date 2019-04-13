@@ -1,0 +1,16 @@
+.albums-container {
+    background-color: peru !important;
+    position: fixed !important;
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.albums-user {
+    background-color: red;
+    position: relative !important;
+    height: 80%;
+    width: 90%;
+    margin: auto;
+    margin-top: 80px;
+    overflow-y: auto;
+}

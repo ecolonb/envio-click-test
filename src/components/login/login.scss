@@ -1,0 +1,59 @@
+.login-container {
+    background-color: #396498 !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    position: fixed !important;
+    height: 100% !important;
+    ;
+    display: block !important;
+    top: 0;
+}
+
+.card-login {
+    margin-top: 10%;
+    width: 70%;
+    margin: auto;
+    background-color: #F7F8FA !important;
+    border: 0 !important;
+}
+
+.login-form-container {
+    margin: auto;
+    max-width: 450px;
+    background-color: #F7F8FA;
+    color: rgb(80, 77, 74) !important;
+    font-size: 30px;
+    margin-top: 100px;
+    text-align: center;
+    padding: 25px 25px 70px 25px;
+}
+
+.img-login {
+    height: 100px;
+    width: 70px !important;
+    margin: auto;
+}
+
+.forgot-password {
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+.forgot-password>a {
+    text-decoration: none !important;
+    color: rgb(124, 123, 123);
+}
+
+.forgot-password>a:hover {
+    text-decoration: none !important;
+    color: #396498;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+    .login-form-container {
+        margin: auto;
+        width: 90%;
+        margin-top: 100px;
+    }
+}
