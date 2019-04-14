@@ -6,24 +6,36 @@ import { Card, Button } from 'react-bootstrap';
 //Estilos
 import './item-user.scss';
 
-export default function({ usuarioInfo }) {
+export default function({
+  userItem,
+  setShowSidebar,
+  setUserDetail,
+  setEditName,
+  setEditDescription
+}) {
   return (
     <div
       className="user-container"
       onClick={evt => {
-        console.log('-- asds --: ', evt.target.className);
-        console.log('-->>', evt.target.className.indexOf('card-body'));
         if (evt.target.className.indexOf('btn') >= 0) {
-          console.log('Mostrar POST del usuario -->>', usuarioInfo.id);
+          console.log('Mostrar POST del usuario -->>', userItem.id);
         } else {
-          console.log('Mostrar perfil del usuario en SIDE', usuarioInfo.id);
+          console.log(
+            '------Mostrar perfil del usuario en SIDE-->>>>>',
+            userItem
+          );
+          //Si se da click en cualquier parte del CARD se actualiza la info para mostrar en el sideBar y se muestra
+          setUserDetail(userItem);
+          setEditDescription(false);
+          setEditName(false);
+          setShowSidebar(true);
         }
       }}
     >
       <Card className="card-user" name="card_user">
         <div className="img-user">
           <img
-            src={usuarioInfo.avatar}
+            src={userItem.avatar}
             alt="img-profile"
             className="img-profile"
             name="img_profile"
@@ -31,13 +43,13 @@ export default function({ usuarioInfo }) {
         </div>
         <Card.Body name="card_profile">
           <Card.Title>
-            {usuarioInfo.first_name + ' ' + usuarioInfo.last_name}
+            {userItem.first_name + ' ' + userItem.last_name}
           </Card.Title>
           <Card.Text className="card_text">
             Some quick example text to build on the cardd title and makee up
             thes bulk of the card's content..
             <br />
-            Id: <strong>{usuarioInfo.id}</strong>
+            Id: <strong>{userItem.id}</strong>
           </Card.Text>
           <Button variant="primary" name="view_posts">
             View posts

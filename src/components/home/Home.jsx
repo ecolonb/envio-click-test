@@ -11,14 +11,26 @@ import { Spinner } from 'react-bootstrap';
 
 //Estilos SCSSs
 import './home.scss';
-
+import Sidebar from '../sidebar/Sidebar';
+// {
+//     first_name: '',
+//     avatar: '',
+//     last_name: ''
+//   }
 export default function() {
+  const [userDetailInfo, setUserDetailInfo] = useState(undefined);
+  const [infoToSide, setInfoToSide] = useState(null);
   const [scrollVal, setScrollVal] = useState(0);
   const [final, setFinal] = useState(false);
   const [pagina, setPagina] = useState(1);
   const [userList, setUserList] = useState([]);
   const [reqInProgress, setReqInProgress] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+  //----
 
+  const [editName, setEditName] = useState(false);
+  const [editDescription, setEditDescription] = useState(false);
+  // editName={editName} setEditName={setEditName} editDescription={editDescription} setEditDescription={setEditDescription}
   // Hooks que entra en acción al inicio y final del componente
   useEffect(() => {
     loadUsers();
@@ -29,6 +41,14 @@ export default function() {
       userList
     );
   }, [userList]);
+
+  //Hooks para saber que información mostrar en el modal
+  useEffect(() => {
+    console.log('xxxxxxx--xOn changin info-->>>', userDetailInfo);
+    //Cuando cambia la info que hay que mostrar se muestra el SideBar
+    setInfoToSide(userDetailInfo);
+    // setShowSidebar(true);
+  }, [userDetailInfo]);
 
   async function loadUsers() {
     setReqInProgress(true);
@@ -41,6 +61,7 @@ export default function() {
 
   async function onScroll(elmt) {
     setScrollVal(elmt.scrollLeft);
+    setShowSidebar(false);
     const visualArea = elmt.clientWidth;
     const pixelScrolled = elmt.scrollLeft;
     const scrollMaximumWidth = elmt.scrollWidth;
@@ -97,14 +118,33 @@ export default function() {
           onWheel(w);
         }}
       >
-        {userList.map((user_item, index) => {
-          return <ItemUsuario key={index} usuarioInfo={user_item} />;
+        {userList.map((userItem, index) => {
+          return (
+            <ItemUsuario
+              key={index}
+              setShowSidebar={setShowSidebar}
+              userItem={userItem}
+              setUserDetail={setUserDetailInfo}
+              setEditName={setEditName}
+              setEditDescription={setEditDescription}
+            />
+          );
         })}
       </div>
       {reqInProgress && (
         <div className="loading-area">
           <Spinner animation="grow" variant="secondary" role="status" />
         </div>
+      )}
+      {showSidebar && (
+        <Sidebar
+          setShowSidebar={setShowSidebar}
+          infoToSide={infoToSide}
+          editName={editName}
+          setEditName={setEditName}
+          editDescription={editDescription}
+          setEditDescription={setEditDescription}
+        />
       )}
     </div>
   );
