@@ -4,7 +4,7 @@ import PageNotFound from './page-not-found/Page-not-found';
 import Home from './home/Home';
 import NavBar from './navbar/NavBar';
 import Login from './login/Login';
-import PrivateRoute from './private-route/Private-route';
+import PrivateRoute from './private-route/Private-route.jsx';
 import Albums from './albums/Albums';
 import { getSessionFromStorage } from '../services/session';
 

@@ -1,0 +1,50 @@
+.user-container {
+    background-color: #a7aaa7;
+    height: 100% !important;
+    max-width: 400px;
+    display: inline-block;
+    margin-right: 120px;
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.img-user {
+    width: 100%;
+    text-align: center;
+    padding-top: 34px;
+}
+
+.img-profile {
+    height: 200px;
+    border-radius: 150px;
+    margin: auto;
+}
+
+.description {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.card-user {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    word-wrap: break-word;
+    white-space: normal;
+    border-radius: 10px !important;
+    cursor: pointer;
+}
+
+.card_text {
+    word-wrap: break-word;
+    height: auto;
+    box-sizing: content-box;
+}
+
+@media only screen and (max-width: 650px) {
+    .user-container {
+        width: 320px !important;
+    }
+}

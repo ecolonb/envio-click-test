@@ -48,7 +48,7 @@ export default function({ loggedUser, setLoggedUser }) {
                 }}
                 className="text-dark"
               >
-                <FaSignOutAlt className="icon-navbar" />
+                <FaSignOutAlt className="icon-navbar icon-logout" />
               </Link>
             </Nav>
           </Navbar>
