@@ -1,13 +1,26 @@
 import React from 'react';
+
+//Librerías externas
 import { Navbar, Nav } from 'react-bootstrap';
 import { FaSignOutAlt, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
+//Servicios
+import { delSessionFromStorage } from '../../services/session';
+
+//Estilos
 import './navbar.scss';
 export default function({ loggedUser, setLoggedUser }) {
-  const logOut = () => {
-    sessionStorage.removeItem('sessionUser');
+  const toggle_dropdown = o => {
+    // eslint-disable-next-line no-restricted-globals
+    // document.getElementById('btn-toggle-nav').click();
+  };
+
+  const logOut = async () => {
+    await delSessionFromStorage();
     setLoggedUser(false);
   };
+
   return (
     <Navbar
       collapseOnSelect
@@ -17,28 +30,27 @@ export default function({ loggedUser, setLoggedUser }) {
       className="navbar_cstm border border-gray"
       fixed="top"
     >
-      <Navbar.Brand href="#home" className="text-dark">
-        DONE
-      </Navbar.Brand>
+      <Navbar.Brand href="#home">DONE</Navbar.Brand>
 
       {loggedUser && (
         <React.Fragment>
-          <Navbar.Toggle
+          {/* <Navbar.Toggle
             aria-controls="responsive-navbar-nav"
             className="bg-secondary"
-          />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto" />
+            id="btn-toggle-nav"
+          /> */}
+          <Nav className="mr-auto" />
+          <Navbar id="responsive-navbar-nav">
             <Nav>
-              <Link to="/home" className="text-dark">
+              <Link to="/home" className="item-nav">
                 Home
               </Link>
-              <Link to="/albums" className="text-dark">
+              <Link to="/albums" className="item-nav">
                 Album
               </Link>
-              <Nav.Link eventKey={4} href="#memes" className="text-dark">
-                <FaSearch />
-              </Nav.Link>
+              <Link to="/" className="text-dark">
+                <FaSearch className="icon-navbar" />
+              </Link>
               <Link
                 to="/login"
                 onClick={() => {
@@ -46,16 +58,10 @@ export default function({ loggedUser, setLoggedUser }) {
                 }}
                 className="text-dark"
               >
-                <FaSignOutAlt
-                  style={{
-                    fontSize: '21px',
-                    marginRight: '5px',
-                    marginBottom: '-15px'
-                  }}
-                />
+                <FaSignOutAlt className="icon-navbar" />
               </Link>
             </Nav>
-          </Navbar.Collapse>
+          </Navbar>
         </React.Fragment>
       )}
     </Navbar>
