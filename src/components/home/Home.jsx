@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Card, Button } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import './home.scss';
 
 export default function() {
@@ -7,14 +7,27 @@ export default function() {
   const [final, setFinal] = useState(false);
 
   function onScroll(elmt) {
+    setScrollVal(elmt.scrollLeft);
     if (elmt.clientWidth + elmt.scrollLeft === elmt.scrollWidth) {
-      console.log('is a finall');
       setFinal(true);
     } else {
       setFinal(false);
     }
   }
-
+  function onWheel(w) {
+    console.log('Y ', w.deltaY);
+    console.log('X', w.deltaX);
+    console.log('scrollVal: ', scrollVal);
+    if (w.deltaY < 0 && scrollVal >= 50) {
+      setScrollVal(scrollVal - 100);
+    }
+    if (w.deltaY > 0 && !final) {
+      setScrollVal(scrollVal + 100);
+    }
+    const elmt = document.getElementById('users-container');
+    elmt.scrollLeft = scrollVal;
+    return true;
+  }
   return (
     <div className="home-container">
       <div
@@ -23,15 +36,8 @@ export default function() {
         onScroll={evt => {
           return onScroll(evt.target);
         }}
-        onWheel={() => {
-          const elmt = document.getElementById('users-container');
-          elmt.scrollLeft = scrollVal;
-          if (!final) {
-            setScrollVal(scrollVal + 100);
-          } else {
-            setScrollVal(0);
-          }
-          return true;
+        onWheel={w => {
+          onWheel(w);
         }}
       >
         <div className="user-container">
@@ -44,9 +50,9 @@ export default function() {
               />
             </div>
             <Card.Body>
-              <Card.Title>Card Titldeds</Card.Title>
+              <Card.Title>Card Title</Card.Title>
               <Card.Text className="card_text">
-                Some quick example text to build on the card title and make up
+                Some quick example text to build on the cardd title and make up
                 the bulk of the card's content.
               </Card.Text>
               <Button variant="primary">Go somewhere</Button>

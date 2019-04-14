@@ -28,7 +28,11 @@ export default function() {
 
   return (
     <div>
-      <NavBar loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
+      <NavBar
+        loggedUser={loggedUser}
+        setLoggedUser={setLoggedUser}
+        sessionInfo={sessionInfo}
+      />
       <main>
         <Switch>
           <Route

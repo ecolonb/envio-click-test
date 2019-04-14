@@ -11,11 +11,6 @@ import { delSessionFromStorage } from '../../services/session';
 //Estilos
 import './navbar.scss';
 export default function({ loggedUser, setLoggedUser }) {
-  const toggle_dropdown = o => {
-    // eslint-disable-next-line no-restricted-globals
-    // document.getElementById('btn-toggle-nav').click();
-  };
-
   const logOut = async () => {
     await delSessionFromStorage();
     setLoggedUser(false);
@@ -34,11 +29,6 @@ export default function({ loggedUser, setLoggedUser }) {
 
       {loggedUser && (
         <React.Fragment>
-          {/* <Navbar.Toggle
-            aria-controls="responsive-navbar-nav"
-            className="bg-secondary"
-            id="btn-toggle-nav"
-          /> */}
           <Nav className="mr-auto" />
           <Navbar id="responsive-navbar-nav">
             <Nav>

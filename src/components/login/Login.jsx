@@ -90,7 +90,7 @@ export default function({ loggedUser, setLoggedUser }) {
                   type="invalid"
                   className="text-left txt-feedback"
                 >
-                  Incorrect email
+                  Incorrect email-
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="formBasicPass">
