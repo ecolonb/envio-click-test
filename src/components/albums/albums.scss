@@ -1,16 +1,36 @@
+// .albums-container {
+//     background-color: peru !important;
+//     position: fixed !important;
+//     height: 100% !important;
+//     width: 100% !important;
+// }
 .albums-container {
-    background-color: peru !important;
+    background-color: #ebeef1 !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
     position: fixed !important;
     height: 100% !important;
-    width: 100% !important;
+    display: block !important;
+    top: 0;
+    padding-top: 70px;
+    padding-bottom: 3%;
+    margin: 0 !important;
 }
 
 .albums-user {
-    background-color: red;
+    background-color: rgb(218, 214, 214);
     position: relative !important;
     height: 80%;
     width: 90%;
     margin: auto;
-    margin-top: 80px;
     overflow-y: auto;
+}
+
+.list-users {
+    width: 90%;
+    margin: auto;
+}
+
+.item-user {
+    cursor: pointer;
 }
