@@ -1,5 +1,6 @@
 export default async function Login(email, password) {
-    const requestLoginData = { email, password }
+    console.log('On login funtio-->>>>');
+    const requestLoginData = { email, password };
 
     const url = 'https://reqres.in/api/login';
     const respuesta = await fetch(url, {
@@ -9,6 +10,8 @@ export default async function Login(email, password) {
             'Content-Type': 'application/json'
         }
     });
+    console.log('respuesta: ', respuesta);
     const json = await respuesta.json();
+    console.log('json: ', json);
     return json;
 }

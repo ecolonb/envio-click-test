@@ -28,6 +28,7 @@ export default function({ loggedUser, setLoggedUser }) {
     return;
   }
   const handleSubmit = async event => {
+    console.log('---->>>> handle submit');
     setShowSpinner(true);
     event.preventDefault();
     event.stopPropagation();

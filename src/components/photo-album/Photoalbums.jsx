@@ -13,13 +13,11 @@ export default function({ userId, albums }) {
   }
   const [userAlbums, setUserAlbums] = useState(undefined);
   useEffect(() => {
-    console.log('On use effect--> here find by id', userId, albums);
     loadUserAlbums();
   }, []);
 
   async function loadUserAlbums() {
     const userAlbumsFilter = await findByIdAlbums(albums, userId);
-    console.log('userAlbums: ', userAlbums);
     setUserAlbums(userAlbumsFilter);
   }
 

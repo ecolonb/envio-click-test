@@ -10,6 +10,5 @@ export default async function getUsersByPage(page) {
 export async function getUsersWithAlbums() {
     const url = 'https://jsonplaceholder.typicode.com/users';
     const usersWithAlbum = await axios.get(url);
-    console.log('usersWithAlbum: ', usersWithAlbum);
     return usersWithAlbum;
 }

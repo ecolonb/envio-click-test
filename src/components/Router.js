@@ -22,7 +22,6 @@ export default function() {
   const [users, setUsers] = useState(undefined);
 
   useEffect(() => {
-    console.log('In eseEffectFuntion');
     loadSessionInfo();
   }, []);
   async function loadUersAndAlbums() {
@@ -32,7 +31,6 @@ export default function() {
     //Usando promesas para obtener los albums
     getAllAlbums()
       .then(albumsResp => {
-        console.log('Albums: ', albumsResp);
         setAlbums(albumsResp);
       })
       .catch(err => {
