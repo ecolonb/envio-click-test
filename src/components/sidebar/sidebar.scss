@@ -59,11 +59,12 @@
     margin-right: 12px;
 }
 
-.title-card-detail {
+.area-card-detail {
     width: 90%;
     text-align: justify;
     display: inline-block;
-    margin-right: 12px;
+    margin-right: 21px;
+    padding-left: 10px;
 }
 
 .area-icon-edit {
@@ -86,4 +87,10 @@
 
 .form-control-edit {
     margin-bottom: 8px;
+}
+
+@media only screen and (max-width: 600px) {
+    .area-card-detail {
+        padding-left: 50px;
+    }
 }

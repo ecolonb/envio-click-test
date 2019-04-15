@@ -163,7 +163,7 @@ export default function({
                 </div>
               </div>
               <div className="container-detail">
-                <Card.Text className="card_text title-card-detail">
+                <Card.Text className="card_text area-card-detail">
                   {!editDescription && (
                     <React.Fragment>
                       {infoToSide.description}
