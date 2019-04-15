@@ -8,6 +8,21 @@ import findByIdAlbums from '../../functions/helpers';
 import './photoalbums.scss';
 
 export default function({ userId, albums }) {
+  if (!albums) {
+    return false;
+  }
+  const [userAlbums, setUserAlbums] = useState(undefined);
+  useEffect(() => {
+    console.log('On use effect--> here find by id', userId, albums);
+    loadUserAlbums();
+  }, []);
+
+  async function loadUserAlbums() {
+    const userAlbumsFilter = await findByIdAlbums(albums, userId);
+    console.log('userAlbums: ', userAlbums);
+    setUserAlbums(userAlbumsFilter);
+  }
+
   return (
     <div className="album-container">
       <div className="go-back">
@@ -18,9 +33,12 @@ export default function({ userId, albums }) {
       <div className="text-center">
         Mostrando resultados del id usuario: {userId}
       </div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque ad rerum
-      quod vero placeat ipsum velit recusandae eveniet, perspiciatis explicabo
-      nulla ipsam culpa facere quaerat quas cum iusto voluptas hic!
+      <div className="resultAlbumsUser">
+        {userAlbums &&
+          userAlbums.map(userAlbum => {
+            return <p> {JSON.stringify(userAlbum)} </p>;
+          })}
+      </div>
     </div>
   );
 }

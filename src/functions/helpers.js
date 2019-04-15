@@ -1,5 +1,11 @@
-//Funció para obtener los albums del usuario
+//Funció para Filtrar los albums del usuario
 
 export default async function findByIdAlbums(allAlbums, id) {
-    console.log('----');
+    if (!allAlbums) {
+        return false;
+    }
+    const userAlbums = await allAlbums.filter(
+        album => Number(album.userId) === Number(id)
+    );
+    return userAlbums;
 }

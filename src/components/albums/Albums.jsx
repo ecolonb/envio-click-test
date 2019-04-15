@@ -1,34 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-//Servicios
-import { getUsersWithAlbums } from '../../services/users';
-import getAllAlbums from '../../services/albums';
 
 import './albums.scss';
-export default function() {
-  const [users, setUsers] = useState(undefined);
+export default function({ users, setUsers }) {
   const [redirect, setRedirect] = useState(undefined);
-  const [albums, setAlbums] = useState(undefined);
+
   useEffect(() => {
     console.log('On use effect-->>>');
-    loadUSers();
+    // loadUSers();
   }, []);
 
-  async function loadUSers() {
-    //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
-    const usersWA = await getUsersWithAlbums();
-    setUsers(usersWA.data);
-    //Usando promesas para obtener los albums
-    // getAllAlbums()
-    //   .then(albumsResp => {
-    //     console.log('Albums: ', albumsResp);
-    //     setAlbums(albumsResp);
-    //   })
-    //   .catch(err => {
-    //     console.log('error->', err);
-    //   });
-  }
+  // async function loadUSers() {
+  //   //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
+  //   const usersWA = await getUsersWithAlbums();
+  //   setUsers(usersWA.data);
+  //   //Usando promesas para obtener los albums
+  //   // getAllAlbums()
+  //   //   .then(albumsResp => {
+  //   //     console.log('Albums: ', albumsResp);
+  //   //     setAlbums(albumsResp);
+  //   //   })
+  //   //   .catch(err => {
+  //   //     console.log('error->', err);
+  //   //   });
+  // }
 
   return redirect ? (
     <Redirect to={redirect} />
