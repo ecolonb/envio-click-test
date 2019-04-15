@@ -7,13 +7,31 @@ import Login from './login/Login';
 import PrivateRoute from './private-route/Private-route.jsx';
 import Albums from './albums/Albums';
 import { getSessionFromStorage } from '../services/session';
+import Photoalbums from './photo-album/Photoalbums';
 
 export default function() {
-  const [loggedUser, setLoggedUser] = useState(false);
+  const [loggedUser, setLoggedUser] = useState(true);
   const [sessionInfo, setSessionInfo] = useState(undefined);
+
   useEffect(() => {
+    console.log('In eseEffectFuntion');
     loadSessionInfo();
   }, []);
+  // async function loadUersAndAlbums() {
+  //   //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
+  //   const usersWA = await getUsersWithAlbums();
+  //   setUsers(usersWA.data);
+  //   //Usando promesas para obtener los albums
+  //   getAllAlbums()
+  //     .then(albumsResp => {
+  //       console.log('Albums: ', albumsResp);
+  //       setAlbums(albumsResp);
+  //     })
+  //     .catch(err => {
+  //       console.log('error->', err);
+  //     });
+  //   setUsers(usersWA.data);
+  // }
 
   async function loadSessionInfo() {
     const sessionData = await getSessionFromStorage();
@@ -33,6 +51,7 @@ export default function() {
         setLoggedUser={setLoggedUser}
         sessionInfo={sessionInfo}
       />
+
       <main>
         <Switch>
           <Route
@@ -65,6 +84,21 @@ export default function() {
                 setLoggedUser={setLoggedUser}
               />
             )}
+          />
+          <Route
+            path="/albums/:albumId"
+            exact
+            render={props => {
+              const userId = props.match.params.albumId;
+              return (
+                <PrivateRoute
+                  component={Photoalbums}
+                  loggedUser={loggedUser}
+                  setLoggedUser={setLoggedUser}
+                  userId={userId}
+                />
+              );
+            }}
           />
           <Route
             path="/"

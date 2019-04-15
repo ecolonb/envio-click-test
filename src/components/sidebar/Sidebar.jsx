@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Form } from 'react-bootstrap';
 import { FaWindowClose, FaPen, FaSave } from 'react-icons/fa';
-
-//Librerias externas
-import swal from 'sweetalert';
 
 //Servicios
 import alertError from '../../services/alerts';
@@ -43,6 +40,7 @@ export default function({
             ? dataFormDetails.last_name
             : element.last_name;
           setEditName(false);
+          return true;
         } else if (typeInfoToSave === 'description') {
           element.description = dataFormDetails.description
             ? dataFormDetails.description
@@ -50,6 +48,7 @@ export default function({
           setEditDescription(false);
         }
       }
+      return false;
     });
 
     setUserList(listClone);
