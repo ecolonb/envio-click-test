@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 
 //servicios
 import findByIdAlbums from '../../functions/helpers';
 
-import './photoalbums.scss';
+import './albumslist.scss';
 
 export default function({ userId, albums }) {
   if (!albums) {
     return false;
   }
+  const [redirect, setRedirect] = useState(undefined);
   const [userAlbums, setUserAlbums] = useState(undefined);
   useEffect(() => {
     loadUserAlbums();
@@ -21,7 +22,9 @@ export default function({ userId, albums }) {
     setUserAlbums(userAlbumsFilter);
   }
 
-  return (
+  return redirect ? (
+    <Redirect to={redirect} />
+  ) : (
     <div className="album-container">
       <div className="go-back">
         <NavLink to="/albums" className="navlink-goback">
@@ -34,7 +37,15 @@ export default function({ userId, albums }) {
       <div className="resultAlbumsUser">
         {userAlbums &&
           userAlbums.map(userAlbum => {
-            return <p> {JSON.stringify(userAlbum)} </p>;
+            return (
+              <p
+                onClick={() => {
+                  setRedirect('/album/photos/' + userId + '/' + userAlbum.id);
+                }}
+              >
+                {JSON.stringify(userAlbum)}
+              </p>
+            );
           })}
       </div>
     </div>

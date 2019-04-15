@@ -7,23 +7,28 @@ import Login from './login/Login';
 import PrivateRoute from './private-route/Private-route.jsx';
 import Albums from './albums/Albums';
 import { getSessionFromStorage } from '../services/session';
-import Photoalbums from './photo-album/Photoalbums';
+import Albumslist from './albums-list/Albumslist';
 
 //Servicios
 import { getUsersWithAlbums } from '../services/users';
-import getAllAlbums from '../services/albums';
+import getAllAlbums, { getAllPhotos } from '../services/albums';
 
-//
+//Components
+import Photoalbum from './photo-album/Photoalbum';
 
 export default function() {
   const [loggedUser, setLoggedUser] = useState(true);
   const [sessionInfo, setSessionInfo] = useState(undefined);
   const [albums, setAlbums] = useState(undefined);
   const [users, setUsers] = useState(undefined);
-
+  const [photos, setPhotos] = useState(undefined);
   useEffect(() => {
     loadSessionInfo();
   }, []);
+  useEffect(() => {
+    console.log('photos: ', photos);
+  }, [photos]);
+
   async function loadUersAndAlbums() {
     //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
     const usersWA = await getUsersWithAlbums();
@@ -36,7 +41,8 @@ export default function() {
       .catch(err => {
         console.log('error->', err);
       });
-    setUsers(usersWA.data);
+    const photos = await getAllPhotos();
+    setPhotos(photos);
   }
 
   async function loadSessionInfo() {
@@ -94,16 +100,35 @@ export default function() {
             )}
           />
           <Route
-            path="/albums/:albumId"
+            path="/albums/:userId"
             exact
             render={props => {
-              const userId = props.match.params.albumId;
+              const userId = props.match.params.userId;
               return (
                 <PrivateRoute
-                  component={Photoalbums}
+                  component={Albumslist}
                   loggedUser={loggedUser}
                   setLoggedUser={setLoggedUser}
                   userId={userId}
+                  albums={albums}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/album/photos/:userId/:albumId"
+            exact
+            render={props => {
+              const albumId = props.match.params.albumId;
+              const userId = props.match.params.userId;
+              return (
+                <PrivateRoute
+                  component={Photoalbum}
+                  loggedUser={loggedUser}
+                  setLoggedUser={setLoggedUser}
+                  albumId={albumId}
+                  userId={userId}
+                  photos={photos}
                   albums={albums}
                 />
               );
