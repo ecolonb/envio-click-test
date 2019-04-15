@@ -5,6 +5,9 @@ import { FaWindowClose, FaPen, FaSave } from 'react-icons/fa';
 //Librerias externas
 import swal from 'sweetalert';
 
+//Servicios
+import alertError from '../../services/alerts';
+
 import './sidebar.scss';
 
 export default function({
@@ -13,35 +16,73 @@ export default function({
   editName,
   setEditName,
   editDescription,
-  setEditDescription
+  setEditDescription,
+  userList,
+  setUserList
 }) {
   if (!infoToSide) {
     return false;
   }
 
-  const [dataFormDetails, setDataFormDetails] = useState({
-    name: '',
-    description: ''
-  });
-  useEffect(() => {
-    console.log('dataFormDetails', dataFormDetails);
-  }, [dataFormDetails]);
-  const fakeDescription = `Some quick example text to build on the cardd title and
-                      makee up thes bulk of the card's content...`;
+  const [dataFormDetails, setDataFormDetails] = useState(undefined);
+  async function saveInfo(typeInfoToSave) {
+    if (!dataFormDetails) {
+      return false;
+    }
+    console.log(
+      'La edicón no es percistente, solo se actualiza el estado..., falta hacer una llamada http y actualizar los datos en el server'
+    );
+    const listClone = userList.slice(0);
+    await listClone.map((element, index) => {
+      if (element.id === infoToSide.id) {
+        if (typeInfoToSave === 'name') {
+          element.first_name = dataFormDetails.first_name
+            ? dataFormDetails.first_name
+            : element.first_name;
+          element.last_name = dataFormDetails.last_name
+            ? dataFormDetails.last_name
+            : element.last_name;
+          setEditName(false);
+        } else if (typeInfoToSave === 'description') {
+          element.description = dataFormDetails.description
+            ? dataFormDetails.description
+            : element.description;
+          setEditDescription(false);
+        }
+      }
+    });
+
+    setUserList(listClone);
+  }
+
+  // setUserList
+
   function saveItem(item) {
     switch (item) {
       case 'name':
-        if (dataFormDetails.name.trim().length === 0) {
-          console.log('Debes ingresar el nombre');
+        if (!dataFormDetails) {
+          setEditName(false);
+          break;
+        } else if (
+          !dataFormDetails.hasOwnProperty('last_name') &&
+          !dataFormDetails.hasOwnProperty('first_name')
+        ) {
+          setEditName(false);
+          break;
         } else {
-          console.log('Guardar edición');
+          saveInfo('name');
         }
         break;
       case 'description':
-        if (dataFormDetails.description.trim().length === 0) {
-          console.log('Debes ingresar la descripción');
-        } else {
-          console.log('Saving description: ', dataFormDetails.description);
+        if (!dataFormDetails) {
+          setEditDescription(false);
+          break;
+        } else if (dataFormDetails.hasOwnProperty('description')) {
+          if (dataFormDetails.description.trim().length === 0) {
+            alertError('¡Debes ingresar la descripción!');
+          } else {
+            saveInfo('description');
+          }
         }
         break;
       default:
@@ -57,6 +98,7 @@ export default function({
     return;
   }
   function closeSidabar() {
+    setDataFormDetails(undefined);
     setShowSidebar(false);
   }
   return (
@@ -78,16 +120,27 @@ export default function({
                   {!editName &&
                     infoToSide.first_name + ' ' + infoToSide.last_name}
                   {editName && (
-                    <Form.Control
-                      type="text"
-                      name="name"
-                      defaultValue={
-                        infoToSide.first_name + ' ' + infoToSide.last_name
-                      }
-                      onChange={evt => {
-                        onChangeEvent(evt);
-                      }}
-                    />
+                    <React.Fragment>
+                      <Form.Control
+                        type="text"
+                        placeholder="First name"
+                        name="first_name"
+                        defaultValue={infoToSide.first_name}
+                        onChange={evt => {
+                          onChangeEvent(evt);
+                        }}
+                        className="form-control-edit"
+                      />
+                      <Form.Control
+                        type="text"
+                        name="last_name"
+                        placeholder="Last name"
+                        defaultValue={infoToSide.last_name}
+                        onChange={evt => {
+                          onChangeEvent(evt);
+                        }}
+                      />
+                    </React.Fragment>
                   )}
                 </Card.Title>
                 <div className="area-icon-edit">
@@ -113,7 +166,7 @@ export default function({
                 <Card.Text className="card_text title-card-detail">
                   {!editDescription && (
                     <React.Fragment>
-                      {fakeDescription}
+                      {infoToSide.description}
                       <br />
                       Id: <strong>{infoToSide.id}</strong>
                     </React.Fragment>
@@ -122,11 +175,11 @@ export default function({
                     <Form.Control
                       as="textarea"
                       name="description"
-                      defaultValue={fakeDescription}
+                      defaultValue={infoToSide.description}
                       onChange={evt => {
                         onChangeEvent(evt);
                       }}
-                      rows="10"
+                      rows="9"
                     />
                   )}
                 </Card.Text>

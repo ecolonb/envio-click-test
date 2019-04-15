@@ -1,4 +1,4 @@
-# Aplicacón de prueba
+# Aplicación de prueba
 
 ## Ejecutar npm install
 
@@ -11,8 +11,9 @@ https://envio-click.herokuapp.com/
 ### Accesos
 
 usuario: edd
+
 password: 123
 
 # Descripción
 
-Se utiliza el localStorage para mantener la sesión, hooks para proteger las rutas cuando no se ha iniciado sesión y compartir info entre componentes.
+Se utiliza el localStorage para mantener la sesión, hooks para proteger las rutas cuando no se ha iniciado sesión y compartir información entre componentes.

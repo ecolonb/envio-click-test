@@ -46,8 +46,7 @@ export default function({
             {userItem.first_name + ' ' + userItem.last_name}
           </Card.Title>
           <Card.Text className="card_text">
-            Some quick example text to build on the cardd title and makee up
-            thes bulk of the card's content..
+            {userItem.description}
             <br />
             Id: <strong>{userItem.id}</strong>
           </Card.Text>

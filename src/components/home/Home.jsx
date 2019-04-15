@@ -32,6 +32,9 @@ export default function() {
   const [editDescription, setEditDescription] = useState(false);
   // editName={editName} setEditName={setEditName} editDescription={editDescription} setEditDescription={setEditDescription}
   // Hooks que entra en acción al inicio y final del componente
+  const fakeDescription = `Some quick example text to build on the cardd title and
+                      makee up thes bulk of the card's content...`;
+
   useEffect(() => {
     loadUsers();
   }, []);
@@ -53,7 +56,16 @@ export default function() {
   async function loadUsers() {
     setReqInProgress(true);
     const usersByPage = await getUsersByPage(pagina);
+    console.log('On load user.......');
     if (usersByPage) {
+      await usersByPage.data.map((element, index) => {
+        element.description = fakeDescription;
+      });
+      console.log(
+        'zzzzzz------------------After asign description: ',
+        usersByPage.data
+      );
+
       setUserList([...userList, ...usersByPage.data]);
     }
     setReqInProgress(false);
@@ -78,7 +90,9 @@ export default function() {
       const usersByPage = await getUsersByPage(pagina + 1);
       if (usersByPage) {
         //Es mejor de esta manera al hacer el cambio de estado y agregar nuevos elementos que recorrer el objeto de resultados y hacer push del nuevo elemento o con una concatenación de arrays.
-
+        await usersByPage.data.map((element, index) => {
+          element.description = fakeDescription;
+        });
         setUserList([...userList, ...usersByPage.data]);
 
         if (Number(usersByPage.total_pages) >= pagina) {
@@ -144,6 +158,8 @@ export default function() {
           setEditName={setEditName}
           editDescription={editDescription}
           setEditDescription={setEditDescription}
+          userList={userList}
+          setUserList={setUserList}
         />
       )}
     </div>
