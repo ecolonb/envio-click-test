@@ -9,3 +9,13 @@ export default async function findByIdAlbums(allAlbums, id) {
     );
     return userAlbums;
 }
+
+export async function findPhotosByAlbumId(allPhotos, id) {
+    if (!allPhotos) {
+        return false;
+    }
+    const photoAlbums = await allPhotos.filter(
+        album => Number(album.albumId) === Number(id)
+    );
+    return photoAlbums;
+}
