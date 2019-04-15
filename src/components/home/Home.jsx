@@ -17,26 +17,27 @@ import Sidebar from '../sidebar/Sidebar';
 //     avatar: '',
 //     last_name: ''
 //   }
-export default function() {
+export default function({ userList, setUserList }) {
   const [userDetailInfo, setUserDetailInfo] = useState(undefined);
   const [infoToSide, setInfoToSide] = useState(null);
   const [scrollVal, setScrollVal] = useState(0);
   const [final, setFinal] = useState(false);
   const [pagina, setPagina] = useState(1);
-  const [userList, setUserList] = useState([]);
+  //   const [userList, setUserList] = useState([]);
   const [reqInProgress, setReqInProgress] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   //----
 
   const [editName, setEditName] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
-  // editName={editName} setEditName={setEditName} editDescription={editDescription} setEditDescription={setEditDescription}
-  // Hooks que entra en acción al inicio y final del componente
   const fakeDescription = `Some quick example text to build on the cardd title and
                       makee up thes bulk of the card's content...`;
 
+  // editName={editName} setEditName={setEditName} editDescription={editDescription} setEditDescription={setEditDescription}
+  // Hooks que entra en acción al inicio y final del componente
+
   useEffect(() => {
-    loadUsers();
+    // loadUsers();
   }, []);
   useEffect(() => {
     console.log(
@@ -52,19 +53,19 @@ export default function() {
     // setShowSidebar(true);
   }, [userDetailInfo]);
 
-  async function loadUsers() {
-    setReqInProgress(true);
-    const usersByPage = await getUsersByPage(pagina);
-    console.log('On load user.......');
-    if (usersByPage) {
-      await usersByPage.data.map((element, index) => {
-        return (element.description = fakeDescription);
-      });
+  //   async function loadUsers() {
+  //     setReqInProgress(true);
+  //     const usersByPage = await getUsersByPage(pagina);
+  //     console.log('On load user.......');
+  //     if (usersByPage) {
+  //       await usersByPage.data.map((element, index) => {
+  //         return (element.description = fakeDescription);
+  //       });
 
-      setUserList([...userList, ...usersByPage.data]);
-    }
-    setReqInProgress(false);
-  }
+  //       setUserList([...userList, ...usersByPage.data]);
+  //     }
+  //     setReqInProgress(false);
+  //   }
 
   async function onScroll(elmt) {
     setScrollVal(elmt.scrollLeft);
@@ -127,24 +128,27 @@ export default function() {
           onWheel(w);
         }}
       >
-        {userList.map((userItem, index) => {
-          return (
-            <ItemUsuario
-              key={index}
-              setShowSidebar={setShowSidebar}
-              userItem={userItem}
-              setUserDetail={setUserDetailInfo}
-              setEditName={setEditName}
-              setEditDescription={setEditDescription}
-            />
-          );
-        })}{' '}
+        {userList &&
+          userList.map((userItem, index) => {
+            return (
+              <ItemUsuario
+                key={index}
+                setShowSidebar={setShowSidebar}
+                userItem={userItem}
+                setUserDetail={setUserDetailInfo}
+                setEditName={setEditName}
+                setEditDescription={setEditDescription}
+              />
+            );
+          })}{' '}
       </div>{' '}
-      {reqInProgress && (
+      {reqInProgress || userList.length === 0 ? (
         <div className="loading-area">
           <Spinner animation="grow" variant="secondary" role="status" />
         </div>
-      )}{' '}
+      ) : (
+        false
+      )}
       {showSidebar && (
         <Sidebar
           setShowSidebar={setShowSidebar}

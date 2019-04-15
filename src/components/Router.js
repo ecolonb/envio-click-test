@@ -10,7 +10,7 @@ import { getSessionFromStorage } from '../services/session';
 import Albumslist from './albums-list/Albumslist';
 
 //Servicios
-import { getUsersWithAlbums } from '../services/users';
+import getUsersByPage, { getUsersWithAlbums } from '../services/users';
 import getAllAlbums, { getAllPhotos } from '../services/albums';
 
 //Components
@@ -22,11 +22,17 @@ export default function() {
   const [albums, setAlbums] = useState(undefined);
   const [users, setUsers] = useState(undefined);
   const [photos, setPhotos] = useState(undefined);
+  const [userList, setUserList] = useState([]);
+
+  const fakeDescription = `Some quick example text to build on the cardd title and
+                      makee up thes bulk of the card's content...`;
+
   useEffect(() => {
     loadSessionInfo();
   }, []);
 
   async function loadUersAndAlbums() {
+    console.log('loadUersAndAlbums------------------------->>');
     //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
     const usersWA = await getUsersWithAlbums();
     setUsers(usersWA.data);
@@ -40,6 +46,14 @@ export default function() {
       });
     const photos = await getAllPhotos();
     setPhotos(photos);
+    const usersByPage = await getUsersByPage(1);
+    if (usersByPage) {
+      await usersByPage.data.map((element, index) => {
+        return (element.description = fakeDescription);
+      });
+
+      setUserList([...userList, ...usersByPage.data]);
+    }
   }
 
   async function loadSessionInfo() {
@@ -60,6 +74,10 @@ export default function() {
         loggedUser={loggedUser}
         setLoggedUser={setLoggedUser}
         sessionInfo={sessionInfo}
+        setUsers={setUsers}
+        setAlbums={setAlbums}
+        setPhotos={setPhotos}
+        setUserList={setUserList}
       />
 
       <main>
@@ -72,6 +90,8 @@ export default function() {
                 component={Home}
                 loggedUser={loggedUser}
                 setLoggedUser={setLoggedUser}
+                userList={userList}
+                setUserList={setUserList}
               />
             )}
           />
@@ -80,7 +100,15 @@ export default function() {
             exact
             render={() => {
               return (
-                <Login loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
+                <Login
+                  loggedUser={loggedUser}
+                  setLoggedUser={setLoggedUser}
+                  setUsers={setUsers}
+                  setAlbums={setAlbums}
+                  setPhotos={setPhotos}
+                  setUserList={setUserList}
+                  userList={userList}
+                />
               );
             }}
           />

@@ -9,9 +9,20 @@ import swal from 'sweetalert';
 import Login from '../../services/login';
 import { setSessionOnStorage } from '../../services/session';
 
+//Helpers
+import getUsersByPage, { getUsersWithAlbums } from '../../services/users';
+import getAllAlbums, { getAllPhotos } from '../../services/albums';
 //Estilos
 import './login.scss';
-export default function({ loggedUser, setLoggedUser }) {
+export default function({
+  loggedUser,
+  setLoggedUser,
+  setUsers,
+  setAlbums,
+  setPhotos,
+  setUserList,
+  userList
+}) {
   const [formValidate, setFormValidate] = useState(false);
   const [userLoginData, setUserLoginData] = useState({
     username: '',
@@ -27,8 +38,34 @@ export default function({ loggedUser, setLoggedUser }) {
     });
     return;
   }
+
+  async function loadUersAndAlbums() {
+    const fakeDescription = `Some quick example text to build on the cardd title and
+                      makee up thes bulk of the card's content...`;
+    //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
+    const usersWA = await getUsersWithAlbums();
+    setUsers(usersWA.data);
+    //Usando promesas para obtener los albums
+    getAllAlbums()
+      .then(albumsResp => {
+        setAlbums(albumsResp);
+      })
+      .catch(err => {
+        console.log('error->', err);
+      });
+    const photos = await getAllPhotos();
+    setPhotos(photos);
+    const usersByPage = await getUsersByPage(1);
+    if (usersByPage) {
+      await usersByPage.data.map((element, index) => {
+        return (element.description = fakeDescription);
+      });
+
+      setUserList([...userList, ...usersByPage.data]);
+    }
+  }
+
   const handleSubmit = async event => {
-    console.log('---->>>> handle submit');
     setShowSpinner(true);
     event.preventDefault();
     event.stopPropagation();
@@ -52,6 +89,7 @@ export default function({ loggedUser, setLoggedUser }) {
     console.log('LoginResponse: ', loginResponse);
     if (loginResponse && loginResponse.token) {
       await setSessionOnStorage(loginResponse.token);
+      loadUersAndAlbums();
       setShowSpinner(false);
       setLoggedUser(true);
     } else {

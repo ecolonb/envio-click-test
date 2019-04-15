@@ -10,9 +10,20 @@ import { delSessionFromStorage } from '../../services/session';
 
 //Estilos
 import './navbar.scss';
-export default function({ loggedUser, setLoggedUser }) {
+export default function({
+  loggedUser,
+  setLoggedUser,
+  setUsers,
+  setAlbums,
+  setPhotos,
+  setUserList
+}) {
   const logOut = async () => {
     await delSessionFromStorage();
+    setUsers(undefined);
+    setAlbums(undefined);
+    setPhotos(undefined);
+    setUserList([]);
     setLoggedUser(false);
   };
 
