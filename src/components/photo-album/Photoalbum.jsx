@@ -7,8 +7,6 @@ import findByIdAlbums, { findPhotosByAlbumId } from '../../functions/helpers';
 
 import './photoalbum.scss';
 export default function({ albumId, photos, userId }) {
-  console.log('on photo album-->', albumId, photos);
-
   if (!photos) {
     return false;
   }
@@ -19,7 +17,6 @@ export default function({ albumId, photos, userId }) {
 
   async function loadPhotoAlbums() {
     const photoAlbumsFilter = await findPhotosByAlbumId(photos, albumId);
-    console.log('Photos->', photoAlbumsFilter);
     setPhotoAlbums(photoAlbumsFilter);
   }
 

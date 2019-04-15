@@ -47,7 +47,6 @@ export default function() {
 
   //Hooks para saber que información mostrar en el modal
   useEffect(() => {
-    console.log('xxxxxxx--xOn changin info-->>>', userDetailInfo);
     //Cuando cambia la info que hay que mostrar se muestra el SideBar
     setInfoToSide(userDetailInfo);
     // setShowSidebar(true);
@@ -61,10 +60,6 @@ export default function() {
       await usersByPage.data.map((element, index) => {
         return (element.description = fakeDescription);
       });
-      console.log(
-        'zzzzzz------------------After asign description: ',
-        usersByPage.data
-      );
 
       setUserList([...userList, ...usersByPage.data]);
     }

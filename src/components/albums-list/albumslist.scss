@@ -24,3 +24,13 @@
 .navlink-goback:hover {
     color: rgb(156, 156, 156);
 }
+
+.result-albums-user {
+    display: flex;
+    justify-content: flex-start;
+    width: 90% !important;
+    height: 90% !important;
+    flex-wrap: wrap;
+    margin: auto;
+    cursor: pointer;
+}

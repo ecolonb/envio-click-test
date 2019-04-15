@@ -25,9 +25,6 @@ export default function() {
   useEffect(() => {
     loadSessionInfo();
   }, []);
-  useEffect(() => {
-    console.log('photos: ', photos);
-  }, [photos]);
 
   async function loadUersAndAlbums() {
     //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
@@ -110,6 +107,7 @@ export default function() {
                   loggedUser={loggedUser}
                   setLoggedUser={setLoggedUser}
                   userId={userId}
+                  users={users}
                   albums={albums}
                 />
               );
