@@ -33,6 +33,18 @@ export default function({ loggedUser, setLoggedUser }) {
     event.preventDefault();
     event.stopPropagation();
     setFormValidate(true);
+    if (userLoginData.username.trim() === '') {
+      setShowSpinner(false);
+      return swal(
+        'Error',
+        '¡El email o la contraseña son incorrectos!',
+        'error',
+        {
+          button: 'Ok'
+        }
+      );
+    }
+
     const loginResponse = await Login(
       userLoginData.username,
       userLoginData.password
