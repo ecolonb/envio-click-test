@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 //servicios
-import findByIdAlbums, { findPhotosByAlbumId } from '../../functions/helpers';
+import { findPhotosByAlbumId } from '../../functions/helpers';
 
 import './photoalbum.scss';
 export default function({ albumId, photos, userId }) {

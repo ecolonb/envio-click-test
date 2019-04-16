@@ -24,6 +24,10 @@ export default function() {
   const [photos, setPhotos] = useState(undefined);
   const [userList, setUserList] = useState([]);
 
+  //Paginación
+  const [final, setFinal] = useState(false);
+  const [pagina, setPagina] = useState(1);
+
   const fakeDescription = `Some quick example text to build on the cardd title and
                       makee up thes bulk of the card's content...`;
 
@@ -32,7 +36,6 @@ export default function() {
   }, []);
 
   async function loadUersAndAlbums() {
-    console.log('loadUersAndAlbums------------------------->>');
     //Cuando carga el componente albums se caran del Api, Usuarios y albums, las fotos las cargo en el componente photo_albums
     const usersWA = await getUsersWithAlbums();
     setUsers(usersWA.data);
@@ -51,7 +54,6 @@ export default function() {
       await usersByPage.data.map((element, index) => {
         return (element.description = fakeDescription);
       });
-
       setUserList([...userList, ...usersByPage.data]);
     }
   }
@@ -92,6 +94,10 @@ export default function() {
                 setLoggedUser={setLoggedUser}
                 userList={userList}
                 setUserList={setUserList}
+                final={final}
+                setFinal={setFinal}
+                pagina={pagina}
+                setPagina={setPagina}
               />
             )}
           />

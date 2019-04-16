@@ -9,9 +9,9 @@ import './item-user.scss';
 export default function({
   userItem,
   setShowSidebar,
-  setUserDetail,
   setEditName,
-  setEditDescription
+  setEditDescription,
+  setUserDetailInfo
 }) {
   return (
     <div
@@ -25,7 +25,7 @@ export default function({
             userItem
           );
           //Si se da click en cualquier parte del CARD se actualiza la info para mostrar en el sideBar y se muestra
-          setUserDetail(userItem);
+          setUserDetailInfo(userItem);
           setEditDescription(false);
           setEditName(false);
           setShowSidebar(true);

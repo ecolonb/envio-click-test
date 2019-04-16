@@ -6,7 +6,6 @@ import { FaWindowClose, FaPen, FaSave } from 'react-icons/fa';
 import alertError from '../../services/alerts';
 
 import './sidebar.scss';
-
 export default function({
   setShowSidebar,
   infoToSide,
@@ -15,9 +14,10 @@ export default function({
   editDescription,
   setEditDescription,
   userList,
-  setUserList
+  setUserList,
+  showSidebar
 }) {
-  if (!infoToSide) {
+  if (!infoToSide || !showSidebar) {
     return false;
   }
 
